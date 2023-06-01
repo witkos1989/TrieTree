@@ -99,7 +99,6 @@ namespace TrieTree
             return current.EndOfWord;
         }
 
-
         /// <summary>
         /// Searches longest common prefix in Trie Tree
         /// </summary>
@@ -120,12 +119,12 @@ namespace TrieTree
 
                 TrieNode child = current.Children.First(c => c is not null);
 
+                prefix.Append(child.Content);
+
                 if (child.EndOfWord)
                 {
                     return prefix.ToString();
                 }
-
-                prefix.Append(child.Content);
 
                 current = child;
             }

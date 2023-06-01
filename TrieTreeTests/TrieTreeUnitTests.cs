@@ -142,4 +142,55 @@ public class TrieTests
 
         Assert.True(_sut.Search("Earth"));
     }
+
+    [Fact]
+    public void LongestPrefix_ShouldReturnEmptyString_WhenRootContainsMoreThanOneChildren()
+    {
+        _sut.Insert("Fire")
+            .Insert("Firefighter")
+            .Insert("Fireblaze")
+            .Insert("Earthquake");
+
+        string longestPrefix = _sut.LongestPrefix();
+
+        Assert.Equal("", longestPrefix);
+    }
+
+    [Fact]
+    public void LongestPrefix_ShouldReturnEmptyString_WhenTrieTreeIsEmpty()
+    {
+        string longestPrefix = _sut.LongestPrefix();
+
+        Assert.Equal("", longestPrefix);
+    }
+
+    [Fact]
+    public void LongestPrefix_ShouldReturnCommonPrefix_WhenTreeContainsWordWithTheSameBeginning()
+    {
+        _sut.Insert("Wood")
+            .Insert("Woodcutter")
+            .Insert("Woodchopper");
+
+        string longestPrefix = _sut.LongestPrefix();
+
+        Assert.Equal("wood", longestPrefix);
+
+        _sut.Insert("Would");
+
+        longestPrefix = _sut.LongestPrefix();
+
+        Assert.Equal("wo", longestPrefix);
+
+        _sut.Insert("Write");
+
+        longestPrefix = _sut.LongestPrefix();
+
+        Assert.Equal("w", longestPrefix);
+
+        _sut.Delete("Write");
+
+        longestPrefix = _sut.LongestPrefix();
+
+        Assert.Equal("wo", longestPrefix);
+    }
 }
