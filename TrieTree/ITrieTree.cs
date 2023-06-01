@@ -17,6 +17,12 @@ public interface ITrie
     bool Search(string word);
 
     /// <summary>
+    /// Searches longest common prefix in Trie Tree
+    /// </summary>
+    /// <returns>String containing longest common prefix</returns>
+    string LongestPrefix();
+
+    /// <summary>
     /// Removes word from Trie Tree
     /// </summary>
     /// <param name="word">Word that will be removed</param>

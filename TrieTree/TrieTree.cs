@@ -99,6 +99,38 @@ namespace TrieTree
             return current.EndOfWord;
         }
 
+
+        /// <summary>
+        /// Searches longest common prefix in Trie Tree
+        /// </summary>
+        /// <returns>String containing longest common prefix</returns>
+        public string LongestPrefix()
+        {
+            StringBuilder prefix = new StringBuilder();
+            TrieNode current = Root;
+
+            while (true)
+            {
+                int childrenCount = current.Children.Count(c => c is not null);
+
+                if (childrenCount == 0 || childrenCount > 1)
+                {
+                    return prefix.ToString();
+                }
+
+                TrieNode child = current.Children.First(c => c is not null);
+
+                if (child.EndOfWord)
+                {
+                    return prefix.ToString();
+                }
+
+                prefix.Append(child.Content);
+
+                current = child;
+            }
+        }
+
         /// <summary>
         /// Removes word from Trie Tree
         /// </summary>

@@ -84,7 +84,7 @@ public class TrieTests
             .Insert("Water")
             .Insert("Earth");
 
-        var wholeWord = _sut.Delete("Water");
+        string wholeWord = _sut.Delete("Water");
 
         Assert.Equal("water", wholeWord);
 
@@ -101,7 +101,7 @@ public class TrieTests
             .Insert("Warframe")
             .Insert("Watcher");
 
-        var partOfWord = _sut.Delete("Watcher");
+        string partOfWord = _sut.Delete("Watcher");
 
         Assert.Equal("cher", partOfWord);
 
@@ -116,7 +116,7 @@ public class TrieTests
             .Insert("Earth")
             .Insert("Earthquake");
 
-        var deletedWord = _sut.Delete("Earth");
+        string deletedWord = _sut.Delete("Earth");
 
         Assert.Equal("", deletedWord);
 
@@ -130,7 +130,7 @@ public class TrieTests
             .Insert("Water")
             .Insert("Earth");
 
-        var deletedWord = _sut.Delete("Waterloo");
+        string deletedWord = _sut.Delete("Waterloo");
 
         Assert.Equal("", deletedWord);
 
