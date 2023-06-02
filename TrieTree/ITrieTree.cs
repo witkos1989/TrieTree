@@ -17,6 +17,13 @@ public interface ITrie
     bool Search(string word);
 
     /// <summary>
+    /// Searches words in Trie Tree that match the word given as a parameter 
+    /// </summary>
+    /// <param name="needle">Search parameter</param>
+    /// <returns>Table of words that matches the paramater</returns>
+    IList<string> SearchWords(string word);
+
+    /// <summary>
     /// Searches longest common prefix in Trie Tree
     /// </summary>
     /// <returns>String containing longest common prefix</returns>

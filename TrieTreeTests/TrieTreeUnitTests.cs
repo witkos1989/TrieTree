@@ -193,4 +193,40 @@ public class TrieTests
 
         Assert.Equal("wo", longestPrefix);
     }
+
+    [Fact]
+    public void SearchWords_ShouldReturnListOfWords_WhenTreeContainWordsThatMatchesNeedle()
+    {
+        _sut.Insert("Wait")
+            .Insert("What")
+            .Insert("Watts")
+            .Insert("Waterfall");
+
+        IList<string> words = new List<string>() { "wait", "waterfall", "watts" }; 
+
+        IList<string> result = _sut.SearchWords("wa");
+
+        Assert.Equal(3, result.Count);
+
+        Assert.True(Enumerable.SequenceEqual(words, result));
+
+        result = _sut.SearchWords("what");
+
+        Assert.Equal(1, result.Count);
+
+        Assert.Equal("what", result[0]);
+    }
+
+    [Fact]
+    public void SearchWords_ShouldReturnEmptyList_WhenTreeDoesntContainWordsThatMatchesNeedle()
+    {
+        _sut.Insert("Wait")
+            .Insert("What")
+            .Insert("Watts")
+            .Insert("Waterfall");
+
+        IList<string> result = _sut.SearchWords("when");
+
+        Assert.Empty(result);
+    }
 }

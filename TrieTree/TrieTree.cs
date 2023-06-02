@@ -77,26 +77,41 @@ namespace TrieTree
             string lowerWord = word.Trim().ToLower();
             TrieNode current = Root;
 
-            for (int i = 0; i < lowerWord.Length; i++)
+            if (!IsFound(lowerWord, ref current))
             {
-                bool isLetter = char.IsLetter(lowerWord[i]);
-
-                if (!isLetter)
-                {
-                    return false;
-                }    
-
-                int wordIndex = lowerWord[i] - 'a';
-
-                if (current.Children[wordIndex] is null)
-                {
-                    return false;
-                }
-
-                current = current.Children[wordIndex];
+                return false;
             }
 
             return current.EndOfWord;
+        }
+
+        /// <summary>
+        /// Searches words in Trie Tree that match the word given as a parameter 
+        /// </summary>
+        /// <param name="needle">Search parameter</param>
+        /// <returns>Table of words that matches the paramater</returns>
+        public IList<string> SearchWords(string needle)
+        {
+            string lowerWord = needle.Trim().ToLower();
+            TrieNode current = Root;
+            List<string> words = new();
+            StringBuilder wordBuilder = new();
+
+            if (!IsFound(lowerWord, ref current))
+            {
+                return words;
+            }
+
+            if (current.EndOfWord)
+            {
+                words.Add(lowerWord);
+            }
+
+            wordBuilder.Append(lowerWord);
+
+            SearchWordWalk(current, words, wordBuilder);
+
+            return words;
         }
 
         /// <summary>
@@ -191,6 +206,52 @@ namespace TrieTree
                 deletedChars.Append(child.Content);
 
                 parent.Children[wordIndex] = null!;
+            }
+        }
+
+        private static bool IsFound(string word, ref TrieNode node)
+        {
+            for (int i = 0; i < word.Length; i++)
+            {
+                bool isLetter = char.IsLetter(word[i]);
+
+                if (!isLetter)
+                {
+                    return false;
+                }
+
+                int wordIndex = word[i] - 'a';
+
+                if (node.Children[wordIndex] is null)
+                {
+                    return false;
+                }
+
+                node = node.Children[wordIndex];
+            }
+
+            return true;
+        }
+
+        private void SearchWordWalk(TrieNode node, List<string> words, StringBuilder word)
+        {
+            foreach (TrieNode children in node.Children)
+            {
+                if (children is null)
+                {
+                    continue;
+                }
+
+                word.Append(children.Content);
+
+                if (children.EndOfWord)
+                {
+                    words.Add(word.ToString());
+                }
+
+                SearchWordWalk(children, words, word);
+
+                word.Remove(word.Length - 1, 1);
             }
         }
     }
